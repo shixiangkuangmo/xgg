@@ -141,7 +141,7 @@ class LYB:
 
         try:
             r = requests.post(
-                os.environ.get('signhost'),,
+                os.environ.get('signhost'),
                 json=body
             )
             r.raise_for_status()
