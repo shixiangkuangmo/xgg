@@ -2,21 +2,20 @@
 """
 cron: 10 2 * * *
 new Env('饿了么果园');
+车头ck 默认第一个ck为车头
+export elm_top_ck="1"
 """
 
 import json
 import os
 import random
 import time
-import requests
-from urllib.parse import quote
 from datetime import datetime, date
+from urllib.parse import quote
+
+import requests
 
 nczlck = os.environ.get('nczlck')
-
-
-with open('./ck1.txt', 'r', encoding='utf-8') as file:
-    ck = file.read().strip()
 
 def tq(txt):
     try:
@@ -672,18 +671,15 @@ if __name__ == '__main__':
 
     with open(filename, 'r') as file:
         data = json.load(file)
-
-    if 'elmck' in os.environ:
-        cookie = os.environ.get('elmck')
-    else:
-        print("❎环境变量中不存在[elmck],启用本地变量模式")
-        cookie = ck
-    if cookie == "":
+    ck_str = os.environ.get('elmck','')
+    if not ck_str :
         print("❎本地变量为空，请设置其中一个变量后再运行")
         exit(-1)
-    cookies = cookie.split("&")
+    cookie = ck_str.split("&")
+    top_ck = os.environ.get("elm_top_ck", "1")
+    cookies = cookie[int(top_ck):]
 
-    zlck_list = nczlck.split("&")
+    zlck_list = cookie[:int(top_ck)]
     print(f"获取到 {len(zlck_list)} 个被助力账号")
 
     dzl_num = 0
